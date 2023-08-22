@@ -11,7 +11,6 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-26
 from sklearn.externals import joblib
 from sklearn.metrics import make_scorer, f1_score, recall_score, precision_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
@@ -42,7 +41,6 @@ def bmi(height,weight):
 bmi=int(weight)/((int(height)/100)**2)
 return bmi
 int_features1 = [float(x) for x in request.form.values()]
-27
 age=int_features1[1]
 cigs=int_features1[3]
 height=int_features1[8]
@@ -74,7 +72,6 @@ else:
 dia="No"
 if int(int_features1[6])==1.0:
 bpmeds="Yes"
-28
 else:
 bpmeds="No"
 final_feature1=[np.array(int_features1)]
@@ -102,7 +99,6 @@ def home():
 return render_template('Home.html')
 @app.route('/advanced',methods=['POST'])
 def advanced():
-29
 int_features2 = [int(x) for x in request.form.values()]
 final2_feature=[np.array(int_features2)] prediction2=
 model2.predict(final2_feature) result=prediction2[0]
@@ -129,7 +125,6 @@ fbs="Yes"
 else:
 fbs="No"
 if int(int_features2[6])==1:
-30
 restecg="ST-T wave abnormality"
 elif int(int_features2[6])==2:
 restecg="showing probable or definite left ventricular hypertrophy by
@@ -160,7 +155,6 @@ a doctor immediately"
 return render_template('advance_report.html',prediction_text2=
 result,age=age,sex=sex,cp=cp,trestbps=trestbps,chol=chol,fbs=fbs,restecg=restecg,old
 peak=oldspeak,exang=exang,slope=slope,ca=ca,thal=thal)
-31
 if __name__=="__main__":
 app.run(debug=True)
 #read the csv dataset
@@ -188,7 +182,6 @@ N = 2
 ind = np.arange(N)
 width = 0.1
 fig, ax = plt.subplots(figsize =(8,4))
-32
 heart_disease = [93, 72]
 rects1 = ax.bar(ind, heart_disease, width, color='g')
 no_heart_disease = [114, 24]
@@ -213,7 +206,6 @@ plt.show()
 labels= 'Normal', 'Fixed defect', 'Reversable defect'
 sizes=[12, 36, 89]
 colors=['red', 'orange', 'green']
-33
 plt.pie(sizes, labels=labels, colors=colors, autopct='%.1f%%',
 shadow=True, startangle=140)
 plt.axis('equal')
@@ -238,7 +230,6 @@ clfs = []
 kfolds = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
 np.random.seed(1)
 #Support Vector Machine(SVM)
-34
 pipeline_svm = make_pipeline(SVC(probability=True, kernel="linear",
 class_weight="balanced"))
 grid_svm = GridSearchCV(pipeline_svm,
@@ -267,7 +258,6 @@ labels=[0,1]
 cmx=confusion_matrix(y_test,y_preds, labels)
 print(cmx)
 fig = plt.figure()
-35
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
 plt.title('Confusion matrix of the classifier')
@@ -294,7 +284,6 @@ model_classifierNB = joblib.load("heart_disease.pkl" )
 y_preds = model_classifierNB.predict(x_test)
 print('MultinomialNB accuracy score: ',accuracy_score(y_test, y_preds))
 print('\n')
-36
 import pylab as plt
 labels=[0,1]
 cmx=confusion_matrix(y_test,y_preds, labels)
@@ -322,7 +311,6 @@ clfs.append(classifierLR)
 joblib.dump(classifierLR, "heart_disease.pkl")
 # load from file and predict using the best configs found in the CV step
 model_classifierLR = joblib.load("heart_disease.pkl" )
-37
 # get predictions from best model above
 y_preds = model_classifierLR.predict(x_test)
 print('Logistic Regression accuracy score: ',accuracy_score(y_test, y_preds))
@@ -351,7 +339,6 @@ classifierDT.score(x_test, y_test)
 print('Decision Tree LogLoss {score}'.format(score=log_loss(y_test,
 classifierDT.predict_proba(x_test))))
 clfs.append(classifierDT)
-38
 # save best model to current working directory
 joblib.dump(classifierDT, "heart_disease.pkl")
 # load from file and predict using the best configs found in the CV step
@@ -379,7 +366,6 @@ print(classification_report(y_test, y_preds))
 # Random Forest(RF)
 classifierRF=RandomForestClassifier()
 classifierRF.fit(x_train,y_train)
-39
 classifierRF.score(x_test, y_test)
 print('RandomForestLogLoss {score}'.format(score=log_loss(y_test,
 classifierRF.predict_proba(x_test))))
@@ -408,7 +394,6 @@ plt.ylabel('Actual')
 plt.show()
 print('\n')
 print(classification_report(y_test, y_preds))
-40
 print('\n')
 print('Accuracy of svm: {}'.format(grid_svm.score(x_test, y_test)))
 print('Accuracy of naive bayes: {}'.format(classifierNB.score(x_test, y_test)))
@@ -432,7 +417,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.externals import joblib
 from sklearn.metrics import make_scorer, f1_score, recall_score, precision_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-41
 from sklearn.metrics import log_loss
 import warnings
 warnings.simplefilter(action = 'ignore', category= FutureWarning)
@@ -461,7 +445,6 @@ plt.show()
 # Plot a bar graph for Gender V/s target
 N = 2
 ind = np.arange(N)
-42
 width = 0.1
 fig, ax = plt.subplots(figsize =(8,4))
 heart_disease = [93, 72]
@@ -488,7 +471,6 @@ plt.show()
 labels= 'Normal', 'Fixed defect', 'Reversable defect'
 sizes=[12, 36, 89]
 colors=['red', 'orange', 'green']
-43
 plt.pie(sizes, labels=labels, colors=colors, autopct='%.1f%%',
 shadow=True, startangle=140)
 plt.axis('equal')
@@ -513,7 +495,6 @@ clfs = []
 kfolds = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
 np.random.seed(1)
 #Support Vector Machine(SVM)
-44
 pipeline_svm = make_pipeline(SVC(probability=True, kernel="linear",
 class_weight="balanced"))
 grid_svm = GridSearchCV(pipeline_svm,
@@ -542,7 +523,6 @@ labels=[0,1]
 cmx=confusion_matrix(y_test,y_preds, labels)
 print(cmx)
 fig = plt.figure()
-45
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
 plt.title('Confusion matrix of the classifier')
@@ -569,7 +549,6 @@ model_classifierNB = joblib.load("heart_disease.pkl" )
 y_preds = model_classifierNB.predict(x_test)
 print('MultinomialNB accuracy score: ',accuracy_score(y_test, y_preds))
 print('\n')
-46
 import pylab as plt
 labels=[0,1]
 cmx=confusion_matrix(y_test,y_preds, labels)
@@ -597,7 +576,6 @@ clfs.append(classifierLR)
 joblib.dump(classifierLR, "heart_disease.pkl")
 # load from file and predict using the best configs found in the CV step
 model_classifierLR = joblib.load("heart_disease.pkl" )
-47
 # get predictions from best model above
 y_preds = model_classifierLR.predict(x_test)
 print('Logistic Regression accuracy score: ',accuracy_score(y_test, y_preds))
@@ -626,7 +604,6 @@ classifierDT.score(x_test, y_test)
 print('Decision Tree LogLoss {score}'.format(score=log_loss(y_test,
 classifierDT.predict_proba(x_test))))
 clfs.append(classifierDT)
-48
 # save best model to current working directory
 joblib.dump(classifierDT, "heart_disease.pkl")
 # load from file and predict using the best configs found in the CV step
@@ -655,7 +632,6 @@ print(classification_report(y_test, y_preds))
 classifierRF=RandomForestClassifier()
 classifierRF.fit(x_train,y_train)
 classifierRF.score(x_test, y_test)
-49
 print('RandomForestLogLoss {score}'.format(score=log_loss(y_test,
 classifierRF.predict_proba(x_test))))
 clfs.append(classifierRF)
@@ -686,7 +662,6 @@ print(classification_report(y_test, y_preds))
 print('\n')
 print('Accuracy of svm: {}'.format(grid_svm.score(x_test, y_test)))
 print('Accuracy of naive bayes: {}'.format(classifierNB.score(x_test, y_test)))
-50
 print('Accuracy of logistic regression: {}'.format(classifierLR.score(x_test, y_test)))
 print('Accuracy of decision tree: {}'.format(classifierDT.score(x_test, y_test)))
 print('Accuracy of random forest: {}'.format(classifierRF.score(x_test, y_test)))
@@ -719,7 +694,6 @@ height=int_features1[8]
 weight=int_features1[9]
 hrv=int_features1[10]
 int_features1.pop(8)
-51
 int_features1.pop(9)
 bmi=round(bmi(height,weight),2)
 int_features1.insert(8,bmi)
@@ -750,7 +724,6 @@ bpmeds="No"
 final_feature1=[np.array(int_features1)]
 prediction1= model1.predict(final_feature1)
 result=prediction1[0]
-52
 if result==0:
 result="No need to worry"
 else:
@@ -780,7 +753,6 @@ age=int_features2[0]
 trestbps=int_features2[3]
 chol=int_features2[4]
 oldspeak=int_features2[7]
-53
 thalach=int_features2[7]
 ca=int_features2[10]
 if int(int_features2[1])==1:
@@ -808,7 +780,6 @@ else:
 restecg="Normal"
 if int(int_features2[8])==1:
 exang="Yes"
-54
 else:
 exang="No"
 if int(int_features2[9])==1:
