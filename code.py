@@ -10,26 +10,14 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-
-from xgboost import XGBClassifier
-
-# for model improvement
-from sklearn.ensemble import StackingClassifier
-from sklearn.ensemble import VotingClassifier
 import joblib
-from sklearn.metrics import make_scorer, f1_score, recall_score, precision_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.metrics import log_loss
 import warnings
 warnings.simplefilter(action = 'ignore', category= FutureWarning)
-from sklearn.ensemble import BaggingClassifier
-from sklearn.ensemble import AdaBoostClassifier
 import numpy as np
-from flask import Flask,request,jsonify, render_template
-import pickle
 import os
+
 for dirname, _, filenames in os.walk('/kaggle/input'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
@@ -50,8 +38,8 @@ l2 = plt.plot(classifiers, no_heart_disease, color='r',marker='o', linestyle ='d
 markerfacecolor='y', markersize=10 )
 plt.xlabel('Age')
 plt.ylabel('Number of patients')
-plt.title('Age V/s Heart disease')
-plt.legend((l1[0], l2[0]), ('heart_disease', 'no_heart_disease'))
+plt.title('Age V/s Blood Vessel disease')
+plt.legend((l1[0], l2[0]), ('blood_vessel_disease', 'no_blood_vessel_disease'))
 plt.show()
 # Plot a bar graph for Gender V/s target
 N = 2
@@ -66,29 +54,27 @@ ax.set_ylabel('Scores')
 ax.set_title('Gender V/s target')
 ax.set_xticks(ind)
 ax.set_xticklabels(('Male','Female'))
-ax.legend((rects1[0], rects2[0]), ('heart disease', 'no heart disease'))
+ax.legend((rects1[0], rects2[0]), ('blood vessel disease', 'no blood vessel disease'))
 plt.show()
 #Pie charts for thal:Thalassemla
-# Having heart disease
+# Having Blood Vessel disease
 labels= 'Normal', 'Fixed defect', 'Reversable defect'
 sizes=[6, 130, 28]
 colors=['red', 'orange', 'green']
 plt.pie(sizes, labels=labels, colors=colors, autopct='%.1f%%',
 shadow=True, startangle=140)
 plt.axis('equal')
-plt.title('Thalassemla blood disorder status of patients having heart disease')
+plt.title('Thalassemla blood disorder status of patients')
 plt.show()
-# Not having heart disease
+# Not having Blood disease
 labels= 'Normal', 'Fixed defect', 'Reversable defect'
 sizes=[12, 36, 89]
 colors=['red', 'orange', 'green']
 plt.pie(sizes, labels=labels, colors=colors, autopct='%.1f%%',
 shadow=True, startangle=140)
 plt.axis('equal')
-plt.title('Thalassemla blood disorder status of patients who do not have heart disease')
+plt.title('Thalassemla blood disorder status of patients who do not have disease')
 plt.show()
-## Feature selection
-#get correlation of each feature in dataset
 corrmat = data.corr()
 top_corr_features = corrmat.index
 plt.figure(figsize=(13,13))
@@ -122,10 +108,10 @@ print('SVM LogLoss {score}'.format(score=log_loss(y_test,
 grid_svm.predict_proba(x_test))))
 clfs.append(grid_svm)
 # save best model to current working directory
-joblib.dump(grid_svm, "heart_disease.pkl")
+joblib.dump(grid_svm, "blood_vessel.pkl")
 # load from file and predict using the best configs found in the CV step
-model_grid_svm = joblib.load("heart_disease.pkl" )
-# model_grid_svm = pickle.load(open("heart_disease.pkl",'rb'))
+model_grid_svm = joblib.load("blood_vessel.pkl" )
+# model_grid_svm = pickle.load(open("blood_vessel.pkl",'rb'))
 # get predictions from best model above
 y_preds = model_grid_svm.predict(x_test)
 print('SVM accuracy score: ',accuracy_score(y_test, y_preds))
@@ -139,7 +125,7 @@ sns.heatmap(cm,
             yticklabels=['malignant', 'benign'])
 plt.ylabel('Prediction',fontsize=13)
 plt.xlabel('Actual',fontsize=13)
-plt.title('Confusion Matrix',fontsize=17)
+plt.title('Confusion Matrix for SVM',fontsize=17)
 plt.show()
 print('\n')
 print(classification_report(y_test, y_preds))
@@ -151,9 +137,9 @@ print('MultinomialNBLogLoss {score}'.format(score=log_loss(y_test,
 classifierNB.predict_proba(x_test))))
 clfs.append(classifierNB)
 # save best model to current working directory
-joblib.dump(classifierNB, "heart_disease.pkl")
+joblib.dump(classifierNB, "blood_vessel.pkl")
 # load from file and predict using the best configs found in the CV step
-model_classifierNB = joblib.load("heart_disease.pkl" )
+model_classifierNB = joblib.load("blood_vessel.pkl" )
 # get predictions from best model above
 y_preds = model_classifierNB.predict(x_test)
 print('MultinomialNB accuracy score: ',accuracy_score(y_test, y_preds))
@@ -165,7 +151,7 @@ print(cmx)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
-plt.title('Confusion matrix of the classifier')
+plt.title('Confusion matrix of the classifier - Multinomial Naive Bayes')
 fig.colorbar(cax)
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
@@ -180,9 +166,9 @@ print('LogisticRegressionLogLoss {score}'.format(score=log_loss(y_test,
 classifierLR.predict_proba(x_test))))
 clfs.append(classifierLR)
 # save best model to current working directory
-joblib.dump(classifierLR, "heart_disease.pkl")
+joblib.dump(classifierLR, "blood_vessel.pkl")
 # load from file and predict using the best configs found in the CV step
-model_classifierLR = joblib.load("heart_disease.pkl" )
+model_classifierLR = joblib.load("blood_vessel.pkl" )
 # get predictions from best model above
 y_preds = model_classifierLR.predict(x_test)
 print('Logistic Regression accuracy score: ',accuracy_score(y_test, y_preds))
@@ -193,7 +179,7 @@ print(cmx)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
-plt.title('Confusion matrix of the classifier')
+plt.title('Confusion matrix of the classifier - Logistic Regression')
 fig.colorbar(cax)
 ax.set_xticklabels([''] + labels)
 ax.set_yticklabels([''] + labels)
@@ -211,9 +197,9 @@ print('Decision Tree LogLoss {score}'.format(score=log_loss(y_test,
 classifierDT.predict_proba(x_test))))
 clfs.append(classifierDT)
 # save best model to current working directory
-joblib.dump(classifierDT, "heart_disease.pkl")
+joblib.dump(classifierDT, "blood_vessel.pkl")
 # load from file and predict using the best configs found in the CV step
-model_classifierDT = joblib.load("heart_disease.pkl" )
+model_classifierDT = joblib.load("blood_vessel.pkl" )
 # get predictions from best model above
 y_preds = model_classifierDT.predict(x_test)
 print('Decision Tree accuracy score: ',accuracy_score(y_test, y_preds))
@@ -224,7 +210,7 @@ print(cmx)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
-plt.title('Confusion matrix of the classifier')
+plt.title('Confusion matrix of the classifier - Decision Tree')
 fig.colorbar(cax)
 ax.set_xticklabels([''] + labels)
 ax.set_yticklabels([''] + labels)
@@ -241,9 +227,9 @@ print('RandomForestLogLoss {score}'.format(score=log_loss(y_test,
 classifierRF.predict_proba(x_test))))
 clfs.append(classifierRF)
 # save best model to current working directory
-joblib.dump(classifierRF, "heart_disease.pkl")
+joblib.dump(classifierRF, "blood_vessel.pkl")
 # load from file and predict using the best configs found in the CV step
-model_classifierRF = joblib.load("heart_disease.pkl" )
+model_classifierRF = joblib.load("blood_vessel.pkl" )
 # get predictions from best model above
 y_preds = model_classifierRF.predict(x_test)
 print('Random Forest accuracy score: ',accuracy_score(y_test, y_preds))
@@ -254,7 +240,7 @@ print(cmx)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cax = ax.matshow(cmx)
-plt.title('Confusion matrix of the classifier')
+plt.title('Confusion matrix of the classifier - Random Forest')
 fig.colorbar(cax)
 ax.set_xticklabels([''] + labels)
 ax.set_yticklabels([''] + labels)

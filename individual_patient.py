@@ -261,17 +261,17 @@ prediction = voting.predict(input_data_reshaped)
 print(prediction)
 
 if(prediction[0] == 0):
-    print("Patient has a healthy heart 💛💛💛💛")
+    print("Patient has a functional working blood flow 💛💛💛💛")
 
 else:
-    print("Patient has a heart Disease 💔💔💔💔")
+    print("Patient has a dysfunctional working blood flow 💔💔💔💔")
 
 
 pickle.dump(voting, open("trained_model.pkl", 'wb'))
 # saving file
 oaded_model = pickle.load(open("trained_model.pkl",'rb'))
 # save the model to disk
-filename = 'heart_model.sav'
+filename = 'blood_vessel_model.sav'
 joblib.dump(voting, filename)
 
 
