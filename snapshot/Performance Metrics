@@ -1,0 +1,66 @@
+MultinomialNB accuracy score:  0.8292682926829268
+
+
+
+
+              precision    recall  f1-score   support
+
+           0       0.90      0.76      0.82       194
+           1       0.77      0.91      0.83       175
+
+    accuracy                           0.83       369
+   macro avg       0.84      0.83      0.83       369
+weighted avg       0.84      0.83      0.83       369
+
+LogisticRegressionLogLoss 0.38556875226967985
+Logistic Regression accuracy score:  0.8699186991869918
+
+
+
+
+              precision    recall  f1-score   support
+
+           0       0.93      0.81      0.87       194
+           1       0.82      0.93      0.87       175
+
+    accuracy                           0.87       369
+   macro avg       0.87      0.87      0.87       369
+weighted avg       0.88      0.87      0.87       369
+
+Decision Tree LogLoss 0.7014602921687589
+Decision Tree accuracy score:  0.8102981029810298
+
+
+
+
+              precision    recall  f1-score   support
+
+           0       0.90      0.72      0.80       194
+           1       0.75      0.91      0.82       175
+
+    accuracy                           0.81       369
+   macro avg       0.82      0.82      0.81       369
+weighted avg       0.83      0.81      0.81       369
+
+RandomForestLogLoss 0.0651197219127744
+Random Forest accuracy score:  0.986449864498645
+
+
+
+
+              precision    recall  f1-score   support
+
+           0       0.98      0.99      0.99       194
+           1       0.99      0.98      0.99       175
+
+    accuracy                           0.99       369
+   macro avg       0.99      0.99      0.99       369
+weighted avg       0.99      0.99      0.99       369
+
+
+
+Accuracy of svm: 0.8455284552845529
+Accuracy of naive bayes: 0.8292682926829268
+Accuracy of logistic regression: 0.8699186991869918
+Accuracy of decision tree: 0.8102981029810298
+Accuracy of random forest: 0.986449864498645
